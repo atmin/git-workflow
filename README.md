@@ -103,10 +103,12 @@ Fork `master` branch into `short_branch`
 
     git checkout master -b short_branch
 
+
 Take commits E..H (left side is not inclusive) and apply them to `short_branch`
 
     # Current active branch is `short_branch`
     git cherry-pick E..H
+
 
 The result:
 
@@ -115,7 +117,6 @@ The result:
     A-B              <-- master
        \
         C-D-E-F-G-H  <-- long_branch
-
 
 `✎` http://stackoverflow.com/a/9853814  
 `✎` http://wiki.koha-community.org/wiki/Using_Git_Cherry_Pick
