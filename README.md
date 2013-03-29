@@ -4,30 +4,24 @@
 
 
 
-`✓` Setup two local SVN repos for testing
------------------------------------------
+`✓` Setup local SVN repository for testing
+------------------------------------------
 
-Following code will setup local repositories `/tmp/test-svn` and `/tmp/test-svn2`
-and populate them with [some real SVN data](http://progit-example.googlecode.com/svn/)
-
+Following code will setup a local SVN repository `/tmp/test-svn`
+and populate it with [some real SVN data](http://progit-example.googlecode.com/svn/)
 
     mkdir /tmp/test-svn
-    mkdir /tmp/test-svn2
 
-    # create empty repositories
+    # create empty repository
     svnadmin create /tmp/test-svn
-    svnadmin create /tmp/test-svn2
 
     # install a pre-revprop-change hook script
     echo -e "#"'!'"/bin/sh\nexit 0;" > /tmp/test-svn/hooks/pre-revprop-change
     chmod +x /tmp/test-svn/hooks/pre-revprop-change
-    cp /tmp/test-svn/hooks/pre-revprop-change /tmp/test-svn2/hooks/pre-revprop-change
 
     # sync our repos with a sample repository
     svnsync init file:///tmp/test-svn http://progit-example.googlecode.com/svn/
-    svnsync init file:///tmp/test-svn2 http://progit-example.googlecode.com/svn/
     svnsync sync file:///tmp/test-svn
-    svnsync sync file:///tmp/test-svn2
 
 `✎` http://git-scm.com/book/en/Git-and-Other-Systems-Git-and-Subversion
 
@@ -63,13 +57,16 @@ and populate them with [some real SVN data](http://progit-example.googlecode.com
 `✓` Branches
 ------------
 
-    # List local branches. Add -a to list remotes, as well
+List local branches. Add -a to list remotes, as well
+
     git branch
 
-    # Switch to branch
+Switch to branch
+
     git checkout branch-name
 
-    # Create new local branch to track a remote branch
+Create new local branch to track a remote branch
+
     git checkout -b local-test-svn-trunk -t test-svn-trunk
     # Branch local-test-svn-trunk set up to track local ref refs/remotes/test-svn-trunk.
     # Switched to a new branch 'local-test-svn-trunk'
@@ -82,3 +79,36 @@ and populate them with [some real SVN data](http://progit-example.googlecode.com
 
     git svn rebase test-svn-trunk
     # Current branch local-test-svn-trunk is up to date.
+
+
+
+
+`✓` Apply selected commits from one branch to another 
+-----------------------------------------------------
+
+Initial branch structure
+
+    A-B              <-- master
+       \
+        C-D-E-F-G-H  <-- long_branch
+
+Fork master branch into `short_branch`
+
+    git checkout master -b short_branch
+
+Take commits E..H (left side is not inclusive) and apply them to `short_branch`
+
+    # Current active branch is `short_branch`
+    git cherry-pick E..H
+
+The result:
+
+        F'-G'-H'     <-- short_branch
+       /
+    A-B              <-- master
+       \
+        C-D-E-F-G-H  <-- long_branch
+
+        
+`✎` http://stackoverflow.com/a/9853814  
+`✎` http://wiki.koha-community.org/wiki/Using_Git_Cherry_Pick
