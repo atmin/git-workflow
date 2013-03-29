@@ -1,7 +1,12 @@
 `☺` Tips on how to manage multiple SVN paths via Git 
 ====================================================
---------
 
+Work in progress.
+  
+    
+  
+  
+  
 
 
 `✓` Setup local SVN repository for testing
@@ -45,7 +50,8 @@ and populate it with [some real SVN data](http://progit-example.googlecode.com/s
 `ℹ` Your settings are stored in `.git/config`
 
     # Add a new svn-remote as remote branch named 'test-svn-trunk'
-    git config --add svn-remote.test-svn-trunk.url file:///tmp/test-svn/trunk
+    # Don't forget the trailing slash of the url
+    git config --add svn-remote.test-svn-trunk.url file:///tmp/test-svn/trunk/
     git config --add svn-remote.test-svn-trunk.fetch :refs/remotes/test-svn-trunk
 
     # Fetch the whole history in the new branch. Optional: -r BEGINNING_SVN_REVISION
@@ -57,19 +63,37 @@ and populate it with [some real SVN data](http://progit-example.googlecode.com/s
 `✓` Branches
 ------------
 
-List local branches. Add -a to list remotes, as well
+##### List local branches
 
+	# -a will list remotes, as well
     git branch
 
-Switch to branch
+
+##### Switch to branch
 
     git checkout branch-name
 
-Create new local branch to track a remote branch
+
+##### Create new local branch to track a remote branch
 
     git checkout -b local-test-svn-trunk -t test-svn-trunk
     # Branch local-test-svn-trunk set up to track local ref refs/remotes/test-svn-trunk.
     # Switched to a new branch 'local-test-svn-trunk'
+
+
+##### Rename local branch
+
+    git branch -m old-branch new-branch
+
+
+##### Rename remote branch
+
+* `git gc` to package all refs into `.git/packed-refs`
+
+* Edit `.git/packed-refs`, rename the branch
+
+* Edit `.git/config`, rename the branch
+
 
 
 
