@@ -86,13 +86,20 @@ Create new local branch to track a remote branch
 `✓` Apply selected commits from one branch to another 
 -----------------------------------------------------
 
+Git cherry-pick-ing is basically a shortcut for this SVN task:
+
+* export a patch file from a branch
+* move it to another branch
+* apply the patch
+* remove the temporary patch file
+
 Initial branch structure
 
     A-B              <-- master
        \
         C-D-E-F-G-H  <-- long_branch
 
-Fork master branch into `short_branch`
+Fork `master` branch into `short_branch`
 
     git checkout master -b short_branch
 
@@ -109,6 +116,6 @@ The result:
        \
         C-D-E-F-G-H  <-- long_branch
 
-        
+
 `✎` http://stackoverflow.com/a/9853814  
 `✎` http://wiki.koha-community.org/wiki/Using_Git_Cherry_Pick
