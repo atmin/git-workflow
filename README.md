@@ -144,3 +144,10 @@ The result:
 
 `✎` http://stackoverflow.com/a/9853814  
 `✎` http://wiki.koha-community.org/wiki/Using_Git_Cherry_Pick
+
+
+
+
+`✓` A successful Git branching model
+------------------------------------
+`✎` http://nvie.com/posts/a-successful-git-branching-model/
