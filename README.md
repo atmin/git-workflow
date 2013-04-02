@@ -95,7 +95,61 @@ and populate it with [some real SVN data](http://progit-example.googlecode.com/s
 * Edit `.git/config`, rename the branch
 
 
+##### Changes in local branches
+You make a new branch to store your work on some issue
 
+    git branch new-issue
+    git checkout new-issue
+
+Then you do your work, commit/rebase/cherry-pick/whatever suits our needs
+and finally have a batch of commits ready for the upstream svn repo. Your local
+git repo history looks something like this:
+
+    A-B        <-- master
+       \
+        C-D-E  <-- new-issue
+
+An easy thing git-svn can do for you is push merge commits as a squash of all the
+commits in the merged branch. This means that in the svn repo you can get a single
+commit that has all the changes you made in all your local commits in the `new-issue` branch
+
+In order to do that *and* keep your local branches(so you have more information on
+what, when and how you did) you need to do the followiing:
+
+    #go back to your master branch, or whichever branch
+    #is tracking the svn upstream you want to push to
+    git checkout master
+
+    #rebase form the svn repository, so your up to date
+    #befrore commiting back upstream
+    git svn rebase
+
+    #merge your local branch back into the branch that's tracking
+    #the svn repository
+    git merge new-issue
+
+    #push your changes upstream ot the svn repository
+    git svn dcommit
+
+
+Most times merge commits in git are "empty", meaning that they have no
+diff assigned to them. They just have two prent commits, each from one of the
+branches that are being merged. In case of conflicts during merge, that
+git can not resolve on its own, the way you resolve the conflicts is added as
+a diff to the merge commit.
+For subversion a commit is nothing more than a combination of diffs on files, so
+git's merge commits are meaningless in subversion context. So what you get with
+git-svn is that a merge commit is converted to a squash(see the [man page](http://linux.die.net/man/1/git-merge))
+of the branch you've merged in and only after that commited upstream to the subversion repository.
+
+If you look at your log now, oyu'll see your last commit is still a git merge
+commit, referencing the two branches you merged, but also has a subversion
+revision number assigned to it by git-svn.
+
+*!NB!* If you do `git svn rebase` after you merge the branch back into master,
+the rebase could insert all the commits from svn back before you branched, depending
+on when you branched and when you last rebased from svn. So it's easier to just do
+the `svn rebase` before making the local merge commit.
 
 
 `✓` Update external SVN path (svn up)
