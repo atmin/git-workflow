@@ -116,28 +116,28 @@ commit that has all the changes you made in all your local commits in the `new-i
 In order to do that *and* keep your local branches(so you have more information on
 what, when and how you did) you need to do the followiing:
 
-    #go back to your master branch, or whichever branch
-    #is tracking the svn upstream you want to push to
+    # go back to your master branch, or whichever branch
+    # is tracking the svn upstream you want to push to
     git checkout master
 
-    #rebase form the svn repository, so your up to date
-    #befrore commiting back upstream
+    # rebase form the svn repository, so you're up to date
+    # before commiting back upstream
     git svn rebase
 
-    #merge your local branch back into the branch that's tracking
-    #the svn repository
+    # merge your local branch back into the branch
+    # that's tracking the svn repository
     git merge new-issue
 
-    #push your changes upstream ot the svn repository
+    # push your changes upstream ot the svn repository
     git svn dcommit
 
 
 Most times merge commits in git are "empty", meaning that they have no
-diff assigned to them. They just have two prent commits, each from one of the
+diff assigned to them. They just have two parent commits, each from one of the
 branches that are being merged. In case of conflicts during merge, that
 git can not resolve on its own, the way you resolve the conflicts is added as
 a diff to the merge commit.
-For subversion a commit is nothing more than a combination of diffs on files, so
+For Subversion a commit is nothing more than a combination of diffs on files, so
 git's merge commits are meaningless in subversion context. So what you get with
 git-svn is that a merge commit is converted to a squash(see the [man page](http://linux.die.net/man/1/git-merge))
 of the branch you've merged in and only after that commited upstream to the subversion repository.
