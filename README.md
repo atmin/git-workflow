@@ -142,7 +142,7 @@ git's merge commits are meaningless in subversion context. So what you get with
 git-svn is that a merge commit is converted to a squash(see the [man page](http://linux.die.net/man/1/git-merge))
 of the branch you've merged in and only after that commited upstream to the subversion repository.
 
-If you look at your log now, oyu'll see your last commit is still a git merge
+If you look at your log now, you'll see your last commit is still a git merge
 commit, referencing the two branches you merged, but also has a subversion
 revision number assigned to it by git-svn.
 
@@ -198,6 +198,14 @@ The result:
 
 `✎` http://stackoverflow.com/a/9853814  
 `✎` http://wiki.koha-community.org/wiki/Using_Git_Cherry_Pick
+
+
+
+
+`✓` Backup your feature branches in an archive repository
+---------------------------------------------------------
+
+    git push ssh://user@your-backup-server/path/to/repo/ feature-branch-name
 
 
 
